@@ -1,6 +1,9 @@
 --Set to the repository location on the local machine
 DECLARE @RepositoryLocation VARCHAR(MAX) = 'C:\Users\Jim LeGrand\Documents\T-SQL\advent-of-code-tsql\advent-of-code-tsql'
 
+--Speed up execution in VS Code
+SET NOCOUNT ON;
+
 --Variable declarations
 DECLARE @InputFile VARCHAR(MAX) = @RepositoryLocation + '\2016\02\Input.txt'
 DECLARE @SQL VARCHAR(MAX)
