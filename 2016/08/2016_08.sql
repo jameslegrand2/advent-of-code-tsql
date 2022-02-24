@@ -10,6 +10,7 @@ DECLARE @InputFile VARCHAR(MAX) = @RepositoryLocation + '\2016\08\Input.txt'
 DECLARE @SQL VARCHAR(MAX)
 DECLARE @CurrentCommandId INT = 1
 DECLARE @TotalCommands INT
+DECLARE @Character INT = 1
 
 --Cleanup in case of previous errors
 DROP TABLE IF EXISTS #Input
@@ -188,6 +189,53 @@ SELECT SUM(
         ELSE 0
     END)
 FROM #Screen
+
+WHILE @Character <= 10
+BEGIN
+    WITH col1 AS (
+        SELECT y
+            ,[state]
+        FROM #Screen
+        WHERE x = (@Character * 5) - 5
+    ), col2 AS (
+        SELECT y
+            ,[state]
+        FROM #Screen
+        WHERE x = (@Character * 5) - 4
+    ), col3 AS (
+        SELECT y
+            ,[state]
+        FROM #Screen
+        WHERE x = (@Character * 5) - 3
+    ), col4 AS (
+        SELECT y
+            ,[state]
+        FROM #Screen
+        WHERE x = (@Character * 5) - 2
+    ), col5 AS (
+        SELECT y
+            ,[state]
+        FROM #Screen
+        WHERE x = (@Character * 5) - 1
+    )
+    SELECT 
+        c1.[state]
+        ,c2.[state]
+        ,c3.[state]
+        ,c4.[state]
+        ,c5.[state]
+    FROM col1 c1
+        INNER JOIN col2 c2
+            ON c2.y = c1.y
+        INNER JOIN col3 c3
+            ON c3.y = c1.y
+        INNER JOIN col4 c4
+            ON c4.y = c1.y
+        INNER JOIN col5 c5
+            ON c5.y = c1.y
+
+    SET @Character += 1
+END
 
 --Cleanup 
 DROP TABLE #Input
